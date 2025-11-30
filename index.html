@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ms's | Profile</title>
+    <title>Moses | Profile</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <style>
         * {
@@ -182,6 +182,40 @@
             z-index: 5;
             pointer-events: none;
         }
+
+        /* Music Control Button */
+        .music-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .music-control:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.1);
+            box-shadow:
+                0 0 20px rgba(255, 255, 255, 0.6),
+                0 0 40px rgba(255, 255, 255, 0.4);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .music-control svg {
+            width: 28px;
+            height: 28px;
+            fill: #ffffff;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+        }
     </style>
 </head>
 <body>
@@ -209,7 +243,7 @@
     <div class="cursor" id="cursor"></div>
 
     <div class="content">
-        <h1 class="title">Ms's</h1>
+        <h1 class="title">Moses</h1>
         <p class="subtitle">They know what's happening, they just be acting</p>
 
         <div class="social-icons">
@@ -228,6 +262,18 @@
             </a>
         </div>
     </div>
+
+    <!-- Music Control Button -->
+    <button class="music-control" id="music-toggle" aria-label="Toggle Music">
+        <!-- Play Icon (hidden by default) -->
+        <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="display: none;">
+            <path d="M8 5v14l11-7z"/>
+        </svg>
+        <!-- Pause Icon (shown by default) -->
+        <svg id="pause-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M6 4h4v16H6zm8 0h4v16h-4z"/>
+        </svg>
+    </button>
 
     <script>
         // Click to Enter functionality
@@ -407,6 +453,26 @@
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+        });
+
+        // Music Control Toggle
+        const musicToggle = document.getElementById('music-toggle');
+        const playIcon = document.getElementById('play-icon');
+        const pauseIcon = document.getElementById('pause-icon');
+        let isPlaying = true; // Music starts playing after click to enter
+
+        musicToggle.addEventListener('click', () => {
+            if (isPlaying) {
+                music.pause();
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+                isPlaying = false;
+            } else {
+                music.play();
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+                isPlaying = true;
+            }
         });
     </script>
 </body>
